@@ -7,11 +7,15 @@
 
 function[annAvg] = month2ann(dat, time, varargin);
 
-if mod(time(1),365) ~= 31
-	error('input must begin on Jan 31st');
+time = time(:);
+startday = mod(time(1),365)
+if startday <= 31
+    weights = [31 28 31 30 31 30 31 31 30 31 30 31]/31; % no leap year
+else
+    error('First month must be January')
+
 end
 
-weights = [31 28 31 30 31 30 31 31 30 31 30 31]/31; % no leap year
 
 ntime = length(time);
 nyrs = floor(ntime/12);
@@ -31,7 +35,7 @@ if ndims(dat)>2
 else
 	for k = 1:nyrs
         	 ii = 1+12*(k-1);
-                weighted_dat = weights.*dat(ii:ii+11);
+                weighted_dat = weights'.*dat(ii:ii+11);
           	%annAvg(k) = mean(dat(ii:ii+11),1);
 	 	annAvg(k) = mean(weighted_dat);	
 	end
