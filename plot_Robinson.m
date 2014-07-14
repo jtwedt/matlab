@@ -1,9 +1,5 @@
 
-
-
-
-
-function plot_Robinson(field, lat, lat_lim, lon, lon_lim,title)
+function H = plot_Robinson(field, lat, lat_lim, lon, lon_lim)
 
 landareas = shaperead('landareas.shp', 'UseGeoCoords', true);
 axesm('robinson', 'Frame', 'on', 'Grid', 'on', 'origin', [0 -150 0]);
@@ -12,7 +8,7 @@ warning off;
 k  = numel(lon);
 j = [1:k 1];
 
-pcolorm(latg(j,:)',long(j,:)',field(:,j)); shading flat;
+H = pcolorm(latg(j,:)',long(j,:)',field(:,j)); shading flat;
 geoshow(landareas,'Facecolor',[1 1 1]*0.5,'edgecolor',[1 1 1]*0.5);
 
 
